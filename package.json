@@ -1,32 +1,38 @@
 {
-  "name": "sportApp-frontend",
-  "private": true,
-  "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
-  },
-  "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
-    "prettier": "^3.2.5",
-    "turbo": "latest"
-  },
-  "engines": {
-    "node": ">=18"
-  },
-  "packageManager": "yarn@1.22.22",
-  "workspaces": {
-    "packages": [
-      "apps/*",
-      "packages/*"
-    ],
-    "nohoist": [
-      "**/react-native",
-      "**/react-native/**",
-      "**/@react-native",
-      "**/@react-native/**"
-    ]
-  }
+	"name": "sportapp",
+	"private": true,
+	"scripts": {
+		"build": "turbo build",
+		"dev": "turbo dev",
+		"lint": "turbo lint",
+		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
+		"prepare": "husky install",
+		"pre-commit": "turbo pre-commit"
+	},
+	"devDependencies": {
+		"@commitlint/cli": "^19.2.1",
+		"@commitlint/config-conventional": "^19.1.0",
+		"@repo/eslint-config": "*",
+		"@repo/typescript-config": "*",
+		"husky": "^8.0.0",
+		"lint-staged": "^15.2.2",
+		"prettier": "^3.2.5",
+		"turbo": "latest"
+	},
+	"engines": {
+		"node": ">=18"
+	},
+	"packageManager": "yarn@1.22.22",
+	"workspaces": {
+		"packages": [
+			"apps/*",
+			"packages/*"
+		],
+		"nohoist": [
+			"**/react-native",
+			"**/react-native/**",
+			"**/@react-native",
+			"**/@react-native/**"
+		]
+	}
 }
