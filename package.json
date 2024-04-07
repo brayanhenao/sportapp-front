@@ -5,26 +5,13 @@
 		"packages": [
 			"apps/*",
 			"packages/*"
-		],
-		"nohoist": [
-			"**/react-native",
-			"**/react-native/**",
-			"**/@react-native",
-			"**/@react-native/**",
-			"**/react-i18next",
-			"**/react-i18next/**",
-			"**/react-native-vector-icons",
-			"**/react-native-vector-icons/**",
-			"**/react-native-paper",
-			"**/react-native-paper/**",
-			"**/react-test-renderer",
-			"**/react-test-renderer/**"
 		]
 	},
 	"scripts": {
 		"build": "turbo build",
 		"build:web": "turbo build --filter=@sportapp/web",
 		"build:mobile": "turbo build --filter=@sportapp/mobile",
+		"prebuild:android": "turbo prebuild --filter=@sportapp/mobile",
 		"package:mobile": "turbo package --filter=@sportapp/mobile",
 		"dev": "turbo dev",
 		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
