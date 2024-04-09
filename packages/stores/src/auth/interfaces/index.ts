@@ -1,4 +1,5 @@
 import {
+	CreateTrainingSessionRequest,
 	RegisterFullUserRequest,
 	RegisterUserRequest
 } from '@sportapp/sportapp-repository/src/user/interfaces'
@@ -32,6 +33,9 @@ export interface IAuthActions {
 	setLoading: (isAuth: boolean) => void
 	register: (request: RegisterUserRequest) => Promise<boolean>
 	registerFull: (request: RegisterFullUserRequest) => Promise<boolean>
+	registerTrainingSession: (
+		request: CreateTrainingSessionRequest
+	) => Promise<boolean>
 	setUser: (user: User) => void
 	clearState: () => void
 }

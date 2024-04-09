@@ -1,5 +1,6 @@
 import UserApi from '@sportapp/sportapp-repository/src/user'
 import {
+	CreateTrainingSessionRequest,
 	RegisterFullUserRequest,
 	RegisterUserRequest
 } from '@sportapp/sportapp-repository/src/user/interfaces'
@@ -122,6 +123,27 @@ export const useAuthStore = create<IAuthStore>(
 			}))
 
 			return await userApi.registerFull(user.id, request)
+		},
+		registerTrainingSession: async (
+			request: Omit<CreateTrainingSessionRequest, 'user_id'>
+		) => {
+			const userApi = new UserApi()
+			const user = get().user
+
+			if (!user) {
+				return false
+			}
+
+			set((state) => ({
+				...state,
+				loading: true,
+				isAuth: true
+			}))
+
+			return await userApi.createTrainingSession({
+				...request,
+				user_id: user.id
+			})
 		},
 		setError: (error) => set({ error }),
 		setLoading: (loading) => set({ loading }),

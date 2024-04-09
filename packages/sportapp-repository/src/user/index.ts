@@ -3,6 +3,8 @@ import { sportappApi } from '../index'
 import { globalVariables } from '../utils/global-variables'
 import endpoints from './endpoints'
 import {
+	CreateTrainingSessionRequest,
+	CreateTrainingSessionResponse,
 	LoginUserRequest,
 	LoginUserResponse,
 	RegisterFullUserRequest,
@@ -136,6 +138,35 @@ export default class UserApi {
 					password
 				}
 			)
+
+			if (response.status.toString().startsWith('2')) {
+				return response.data
+			}
+		} catch (error) {
+			console.error(error)
+		}
+	}
+
+	async createTrainingSession({
+		user_id,
+		started_at,
+		duration,
+		locations,
+		steps
+	}: CreateTrainingSessionRequest): Promise<CreateTrainingSessionResponse> {
+		try {
+			const endpoint = endpoints.createSession
+			const response =
+				await this.sportappApi.post<CreateTrainingSessionResponse>(
+					endpoint,
+					{
+						user_id,
+						started_at,
+						duration,
+						locations,
+						steps
+					}
+				)
 
 			if (response.status.toString().startsWith('2')) {
 				return response.data

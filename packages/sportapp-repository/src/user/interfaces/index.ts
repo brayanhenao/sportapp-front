@@ -69,3 +69,22 @@ export interface LoginUserResponse {
 	refresh_token: string
 	refresh_token_expires_minutes: number
 }
+
+export interface CreateTrainingSessionRequest {
+	user_id: string
+	started_at: string
+	duration: number
+	locations: object[]
+	steps: number
+}
+
+export interface CreateTrainingSessionResponse {
+	id: string
+	user_id: string
+	session_date: string
+	session_time: string
+	duration: number
+	distance: number
+	average_speed: number // FIXME: is this real?
+	calories: number
+}
