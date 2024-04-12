@@ -26,5 +26,39 @@
 	"residenceCity": "City of Residence",
 	"birthDate": "Date of Birth",
 	"other": "Other",
-	"notExist": "Not exist"
+	"notExist": "Not exist",
+	"favouriteSport": "Favourite Sport",
+	"trainingObjective": "Training Objective",
+	"trainingObjectiveValue": {
+		"build_muscle_mass": "Build Muscle Mass",
+		"lose_weight": "Lose Weight",
+		"tone_up": "Tone Up",
+		"maintain_fitness": "Maintain Fitness"
+	},
+	"trainingFrequency": "Training Frequency",
+	"trainingFrequencyValues": {
+		"DAILY": "Daily",
+		"WEEKLY": "Weekly",
+		"MONTHLY": "Monthly",
+		"EVERY_OTHER_DAY": "Every other day"
+	},
+	"limitations": "Limitations",
+	"availableTrainingHoursPerWeek": "Available Training Time",
+	"weight": "Weight",
+	"height": "Height",
+	"imc": "IMC Perncentage",
+	"allergyType": "Allergy Type",
+	"allergyTypeValue": {
+		"gluten": "Gluten",
+		"lactose": "Lactose",
+		"peanuts": "Peanuts",
+		"treeNuts": "Tree Nuts",
+		"shellfish": "Shellfish",
+		"fish": "Fish",
+		"soy": "Soy",
+		"egg": "Egg",
+		"wheat": "Wheat",
+		"corn": "Corn"
+	},
+	"foodPreferences": "Food Preferences"
 }

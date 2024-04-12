@@ -39,7 +39,7 @@ export default function SportDataForm({
 	return (
 		<div className={`personal-data-form ${className}`}>
 			<Typography className='personal-data-form-title' variant='h3'>
-				Sport
+				{t('sportDataForm.title')}
 			</Typography>
 			<form
 				className='personal-data-form-container'
@@ -47,7 +47,7 @@ export default function SportDataForm({
 				<SelectController
 					control={control}
 					selectProps={{ fullWidth: true }}
-					label={'Deporte que practica o desea practicar'}
+					label={t('form.favouriteSport')}
 					name='favouriteSportId'
 					formControlProps={{ disabled: inputsDisabled }}
 					options={[
@@ -73,8 +73,34 @@ export default function SportDataForm({
 				<SelectController
 					control={control}
 					selectProps={{ fullWidth: true }}
-					label={'Objetivos principales para hacer deporte'}
+					label={t('form.trainingObjective')}
 					name='trainingObjective'
+					formControlProps={{ disabled: inputsDisabled }}
+					options={[
+						{
+							label: 'form.trainingObjectiveValue.build_muscle_mass',
+							value: 'Aumento de masa muscular'
+						},
+						{
+							label: 'form.trainingObjectiveValue.lose_weight',
+							value: 'Pérdida de peso'
+						},
+						{
+							label: 'form.trainingObjectiveValue.tone_up',
+							value: 'Tonificación'
+						},
+						{
+							label: 'form.trainingObjectiveValue.maintain_fitness',
+							value: 'Mantener la forma física'
+						}
+					]}
+				/>
+
+				<SelectController
+					control={control}
+					selectProps={{ fullWidth: true }}
+					label={t('form.trainingFrequency')}
+					name='trainingFrequency'
 					formControlProps={{ disabled: inputsDisabled }}
 					options={[
 						{
@@ -98,21 +124,8 @@ export default function SportDataForm({
 
 				<SelectController
 					control={control}
-					selectProps={{ fullWidth: true }}
-					label={'Frecuencia de entrenamiento'}
-					name='trainingFrequency'
-					formControlProps={{ disabled: inputsDisabled }}
-					options={[
-						{ label: 'form.documentTypeValues.CC', value: 'CC' },
-						{ label: 'form.documentTypeValues.CE', value: 'CE' },
-						{ label: 'form.documentTypeValues.PA', value: 'PA' }
-					]}
-				/>
-
-				<SelectController
-					control={control}
 					selectProps={{ fullWidth: true, multiple: true }}
-					label={'Limitaciones:'}
+					label={t('form.limitations')}
 					name='limitations'
 					formControlProps={{ disabled: inputsDisabled }}
 					options={[
@@ -139,7 +152,7 @@ export default function SportDataForm({
 					control={control}
 					fullWidth
 					disabled={inputsDisabled}
-					label={t('Tiempo para entrenar')}
+					label={t('form.availableTrainingHoursPerWeek')}
 					name='availableTrainingHoursPerWeek'
 					type='number'
 				/>
@@ -148,7 +161,7 @@ export default function SportDataForm({
 					control={control}
 					fullWidth
 					disabled={inputsDisabled}
-					label={t('Peso')}
+					label={t('form.weight')}
 					name='weight'
 					type='number'
 				/>
@@ -157,7 +170,7 @@ export default function SportDataForm({
 					control={control}
 					fullWidth
 					disabled={inputsDisabled}
-					label={t('Altura')}
+					label={t('form.height')}
 					name='height'
 					type='number'
 				/>
@@ -166,7 +179,7 @@ export default function SportDataForm({
 					control={control}
 					fullWidth
 					disabled
-					label={t('porcentaje de IMC')}
+					label={t('form.imc')}
 					name='imc'
 					type='number'
 				/>
@@ -179,7 +192,7 @@ export default function SportDataForm({
 						size='large'
 						type='submit'
 						variant='contained'>
-						{t('register.button-two')}
+						{t('sportDataForm.save')}
 					</LoadingButton>
 				)}
 			</form>
