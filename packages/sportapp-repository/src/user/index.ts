@@ -1,4 +1,4 @@
-import { AxiosInstance } from 'axios'
+import { AxiosInstance, AxiosRequestConfig } from 'axios'
 import { sportappApi } from '../index'
 import { globalVariables } from '../utils/global-variables'
 import endpoints from './endpoints'
@@ -10,6 +10,12 @@ import {
 	RegisterUserRequest,
 	RegisterUserStreamResponse
 } from './interfaces'
+import {
+	PersonalProfileRequestPayload,
+	PersonalProfileResponse,
+	PersonalProfileUpdateRequest,
+	PersonalProfileUpdateResponse
+} from './interfaces/api/personalProfile'
 
 export default class UserApi {
 	private readonly sportappApi: AxiosInstance
@@ -136,6 +142,46 @@ export default class UserApi {
 					password
 				}
 			)
+
+			if (response.status.toString().startsWith('2')) {
+				return response.data
+			}
+		} catch (error) {
+			console.error(error)
+		}
+	}
+
+	async getPersonalProfile(
+		options?: PersonalProfileRequestPayload
+	): Promise<PersonalProfileResponse | undefined> {
+		const endpoint = endpoints.getPersonalProfile
+		try {
+			const response =
+				await this.sportappApi.get<PersonalProfileResponse>(
+					endpoint,
+					options?.options
+				)
+
+			if (response.status.toString().startsWith('2')) {
+				return response.data
+			}
+		} catch (error) {
+			console.error(error)
+		}
+	}
+
+	async updatePersonalProfile(
+		data: PersonalProfileUpdateRequest,
+		options?: AxiosRequestConfig
+	): Promise<PersonalProfileUpdateResponse | undefined> {
+		const endpoint = endpoints.updatePersonalProfile
+		try {
+			const response =
+				await this.sportappApi.patch<PersonalProfileUpdateResponse>(
+					endpoint,
+					data,
+					options
+				)
 
 			if (response.status.toString().startsWith('2')) {
 				return response.data
