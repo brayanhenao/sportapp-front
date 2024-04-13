@@ -1,29 +1,73 @@
-import React from 'react'
-import FontAwesome from '@expo/vector-icons/FontAwesome'
-import { Tabs } from 'expo-router'
+import React, { useState, useEffect } from 'react'
+import { Icon } from 'react-native-paper'
+
+import { Tabs, useSegments } from 'expo-router'
+import { useTranslation } from 'react-i18next'
 
 const ProfileIcon = ({ color }) => (
-	<FontAwesome size={28} name='user' color={color} />
+	<Icon size={20} source='account' color={color} />
 )
 const TrainingIcon = ({ color }) => (
-	<FontAwesome size={28} name='heart' color={color} />
+	<Icon size={20} source='heart' color={color} />
+)
+
+const NotificationsIcon = ({ color }) => (
+	<Icon size={20} source='bell' color={color} />
+)
+
+const PremiumIcon = ({ color }) => (
+	<Icon size={20} source='star' color={color} />
 )
 
 export default function TabLayout() {
+	const { t } = useTranslation()
+
+	const segments = useSegments()
+
+	const [showHeader, setShowHeader] = useState(true)
+
+	useEffect(() => {
+		setShowHeader(segments?.length <= 3)
+	}, [segments?.length])
+
 	return (
-		<Tabs screenOptions={{ tabBarActiveTintColor: 'blue' }}>
+		<Tabs
+			screenOptions={{
+				headerShown: showHeader,
+				headerTitleAlign: 'left',
+				headerTransparent: false,
+				headerTitleStyle: {
+					fontWeight: 'normal',
+					fontSize: 34
+				},
+				headerBackground: () => null
+			}}>
 			<Tabs.Screen
 				name='profile'
 				options={{
-					title: 'Profile',
+					title: t('navbar.profile'),
 					tabBarIcon: ProfileIcon
 				}}
 			/>
 			<Tabs.Screen
 				name='training'
 				options={{
-					title: 'Entrenamiento',
+					title: t('navbar.training'),
 					tabBarIcon: TrainingIcon
+				}}
+			/>
+			<Tabs.Screen
+				name='notifications'
+				options={{
+					title: t('navbar.notifications'),
+					tabBarIcon: NotificationsIcon
+				}}
+			/>
+			<Tabs.Screen
+				name='premium'
+				options={{
+					title: t('navbar.preferential'),
+					tabBarIcon: PremiumIcon
 				}}
 			/>
 		</Tabs>
