@@ -1,9 +1,15 @@
-import defaultRegisterSchema from '@/containers/Register/Default/utils/schema'
 import fullRegisterSchema from '@/containers/Register/Full/utils/schema'
 import 'config/lang/form.ts'
-import { InferType } from 'yup'
+import { InferType, object, string } from 'yup'
 
-const personalDataSchema = defaultRegisterSchema.concat(fullRegisterSchema)
+const personalDataDefaultSchema = object().shape({
+	password: string().notRequired(),
+	name: string().required(),
+	lastName: string().required(),
+	email: string().email().required()
+})
+
+const personalDataSchema = fullRegisterSchema.concat(personalDataDefaultSchema)
 
 export default personalDataSchema
 
