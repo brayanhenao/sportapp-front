@@ -15,9 +15,11 @@ interface SportSession extends FullSportSessionResponse {}
 
 export interface ISportSessionState {
 	sportSession?: SportSession
+	sportSessions?: SportSession[]
 }
 
 export interface ISportSessionActions {
+	setSportSession: (session: SportSession) => void
 	startSportSession: (
 		request: StartSportSessionRequest
 	) => Promise<StartSportSessionResponse | undefined>
@@ -27,5 +29,6 @@ export interface ISportSessionActions {
 	finishSportSession: (
 		session_id: FinishSportSessionRequest
 	) => Promise<FullSportSessionResponse | undefined>
+	getSportSessions: () => Promise<SportSession[] | undefined>
 	clearState: () => void
 }

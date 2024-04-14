@@ -6,13 +6,17 @@ import { create } from 'zustand'
 import { ISportSessionState, ISportSessionStore } from './interfaces'
 
 export const initialSportSessionState: ISportSessionState = {
-	sportSession: undefined
+	sportSession: undefined,
+	sportSessions: []
 }
 
 export const useSportSessionStore = create<ISportSessionStore>(
 	// persist<ISportSessionStore>( #FIXME: This is not working on expo
 	(set) => ({
 		...initialSportSessionState,
+		setSportSession: (session) =>
+			set((state) => ({ ...state, sportSession: session })),
+
 		startSportSession: async (request) => {
 			const sessionApi = new sportSessionApi()
 
@@ -33,32 +37,20 @@ export const useSportSessionStore = create<ISportSessionStore>(
 				...request
 			})
 
-			if (!sportSession) {
-				setTimeout(() => {
-					set((state) => ({
-						...state,
-						sportSession: {
-							session_id: '1',
-							sport_id: '1',
-							user_id: '1',
-							start_date: new Date().toISOString(),
-							duration: 60,
-							steps: 85,
-							distance: 70,
-							calories: 5,
-							average_speed: 1.78,
-							min_heartrate: 80,
-							max_heartrate: 150,
-							avg_heartrate: 133
-						}
-					}))
-				}, 2000)
-			}
-
+			if (!sportSession) return
 			set((state) => ({ ...state, sportSession }))
 
 			return sportSession
 		},
+
+		getSportSessions: async () => {
+			const sessionApi = new sportSessionApi()
+			const sportSessions = await sessionApi.getAllSportSessions()
+			if (!sportSessions) return
+			set((state) => ({ ...state, sportSessions }))
+			return sportSessions
+		},
+
 		clearState: () =>
 			set((state) => ({ ...state, ...initialSportSessionState }))
 	})
