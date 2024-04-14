@@ -46,7 +46,7 @@
 	"limitation": "Limitacion",
 	"limitationsLabels": {
 		"name": "Nombre de la limitacion",
-		"description": "Tipo de limitacion",
+		"description": "Descripción de la limitacion",
 		"add": "Agregar limitacion",
 		"remove": "Eliminar limitacion"
 	},
