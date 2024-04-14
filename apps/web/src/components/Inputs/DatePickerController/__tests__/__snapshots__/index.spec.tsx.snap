@@ -25,13 +25,13 @@ exports[`DatePickerController should render the component 1`] = `
         name="date"
         placeholder="MM/DD/YYYY"
         type="text"
-        value="07/20/1996"
+        value="MM/DD/YYYY"
       />
       <div
         class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
       >
         <button
-          aria-label="Choose date, selected date is Jul 20, 1996"
+          aria-label="Choose date"
           class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root"
           tabindex="0"
           type="button"
