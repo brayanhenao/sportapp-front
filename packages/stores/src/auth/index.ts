@@ -13,7 +13,8 @@ export const initialAuthState: IAuthState = {
 	user: undefined,
 	isAuth: false,
 	error: undefined,
-	loading: false
+	loading: false,
+	authToken: undefined
 }
 
 export const useAuthStore = create(
@@ -41,6 +42,10 @@ export const useAuthStore = create(
 								refreshToken: response.refresh_token, // TODO: this is not safe to be stored in the client this way
 								refreshTokenExpirationMinutes:
 									response.refresh_token_expires_minutes
+							},
+							user:{
+								...state.user!,
+								id:response.user_id // TODO: Crafty
 							}
 						}))
 						return true
@@ -69,7 +74,8 @@ export const useAuthStore = create(
 					user: undefined,
 					isAuth: false,
 					loading: false,
-					error: undefined
+					error: undefined,
+					authToken: undefined
 				}))
 			},
 			register: async (request: RegisterUserRequest) => {
@@ -132,7 +138,11 @@ export const useAuthStore = create(
 					isAuth: true
 				}))
 
-				return await userApi.registerFull(user.id, request)
+				return await userApi.registerFull(request, {
+					headers: {
+						Authorization: `Bearer ${get().authToken?.accessToken}`
+					}
+				})
 			},
 			setError: (error) => set({ error }),
 			setLoading: (loading) => set({ loading }),

@@ -1,6 +1,7 @@
 import { sportappApi } from '../../index'
 import UserApi from '../index'
 import { RegisterFullUserRequest, RegisterUserRequest } from '../interfaces'
+import { NutritionalProfileUpdateRequest } from '../interfaces/api/nutritionalProfile'
 import { SportProfileUpdateRequest } from '../interfaces/api/sportProfile'
 
 jest.mock('../../index', () => ({
@@ -132,6 +133,36 @@ describe('UserApi', () => {
 				expect(error).toMatch('error')
 			}
 		})
+
+		it('should return false if there is an error', async () => {
+			const data: RegisterUserRequest = {
+				email: 'tests@correo.com',
+				first_name: 'test',
+				last_name: 'test',
+				password: '1234567Uu*'
+			}
+			const response = {
+				pipeThrough: jest.fn(() => ({
+					getReader: jest.fn(() => ({
+						read: jest.fn(() =>
+							Promise.resolve({
+								done: false,
+								value: `data: \r\n\r\n data: \r\n\r\ndata: {"status": "error", "message": "User already exists"}`
+							})
+						)
+					}))
+				}))
+			}
+
+			;(fetch as jest.Mock).mockImplementationOnce(() =>
+				Promise.resolve({ body: response })
+			)
+			const userApi = new UserApi()
+
+			const result = await userApi.register(data)
+
+			expect(result).toBe(false)
+		})
 	})
 
 	describe('registerFull', () => {
@@ -172,12 +203,12 @@ describe('UserApi', () => {
 				identification_type: 'CC',
 				residence_age: 1
 			}
-			const uuid = '1234'
-			await userApi.registerFull(uuid, data)
+			await userApi.registerFull(data)
 
 			expect(sportappApi.patch).toHaveBeenCalledWith(
-				`/users/${uuid}/complete-registration`,
-				data
+				`/users/complete-registration`,
+				data,
+				undefined
 			)
 		})
 
@@ -198,10 +229,8 @@ describe('UserApi', () => {
 				residence_age: 1
 			}
 
-			const uuid = '1234'
-
 			try {
-				await userApi.registerFull(uuid, data)
+				await userApi.registerFull(data)
 			} catch (error) {
 				expect(error).toMatch('error')
 			}
@@ -604,6 +633,170 @@ describe('UserApi', () => {
 
 			try {
 				await userApi.updateSportProfile(data)
+			} catch (error) {
+				expect(error).toMatch('error')
+			}
+		})
+	})
+
+	describe('getNutritionalProfile', () => {
+		it('should call the getNutritionalProfile endpoint', async () => {
+			;(sportappApi.get as jest.Mock).mockImplementationOnce(() =>
+				Promise.resolve({
+					status: 200,
+					data: {
+						calories: 2000,
+						carbohydrates: 300,
+						fats: 50,
+						proteins: 100
+					}
+				})
+			)
+			const userApi = new UserApi()
+			const response = await userApi.getNutritionalProfile()
+
+			expect(response).toStrictEqual({
+				calories: 2000,
+				carbohydrates: 300,
+				fats: 50,
+				proteins: 100
+			})
+		})
+
+		it('should return undefined if the request fails and catch error', async () => {
+			;(sportappApi.get as jest.Mock).mockImplementationOnce(() =>
+				Promise.resolve({
+					status: 400
+				})
+			)
+			const userApi = new UserApi()
+			const response = await userApi.getNutritionalProfile()
+
+			expect(response).toBeUndefined()
+		})
+
+		it('should return undefined if the request fails and catch error', async () => {
+			;(sportappApi.get as jest.Mock).mockImplementationOnce(() =>
+				Promise.reject('error')
+			)
+			const userApi = new UserApi()
+
+			try {
+				await userApi.getNutritionalProfile()
+			} catch (error) {
+				expect(error).toMatch('error')
+			}
+		})
+	})
+
+	describe('updateNutritionalProfile', () => {
+		it('should call the updateNutritionalProfile endpoint', async () => {
+			;(sportappApi.patch as jest.Mock).mockImplementationOnce(() =>
+				Promise.resolve({
+					status: 200,
+					data: {
+						calories: 2000,
+						carbohydrates: 300,
+						fats: 50,
+						proteins: 100
+					}
+				})
+			)
+			const userApi = new UserApi()
+			const data: NutritionalProfileUpdateRequest = {
+				food_preference: '',
+				nutritional_limitations: ['uuid']
+			}
+			const response = await userApi.updateNutritionalProfile(data)
+
+			expect(response).toStrictEqual({
+				calories: 2000,
+				carbohydrates: 300,
+				fats: 50,
+				proteins: 100
+			})
+		})
+
+		it('should return undefined if the request fails and catch error', async () => {
+			;(sportappApi.patch as jest.Mock).mockImplementationOnce(() =>
+				Promise.resolve({
+					status: 400
+				})
+			)
+			const userApi = new UserApi()
+			const data: NutritionalProfileUpdateRequest = {
+				food_preference: '',
+				nutritional_limitations: ['uuid']
+			}
+			const response = await userApi.updateNutritionalProfile(data)
+
+			expect(response).toBeUndefined()
+		})
+
+		it('should return undefined if the request fails and catch error', async () => {
+			;(sportappApi.patch as jest.Mock).mockImplementationOnce(() =>
+				Promise.reject('error')
+			)
+			const userApi = new UserApi()
+			const data: NutritionalProfileUpdateRequest = {
+				food_preference: '',
+				nutritional_limitations: ['uuid']
+			}
+
+			try {
+				await userApi.updateNutritionalProfile(data)
+			} catch (error) {
+				expect(error).toMatch('error')
+			}
+		})
+	})
+
+	describe('getAllNutritionalLimitations', () => {
+		it('should call the getAllNutritionalLimitations endpoint', async () => {
+			;(sportappApi.get as jest.Mock).mockImplementationOnce(() =>
+				Promise.resolve({
+					status: 200,
+					data: [
+						{
+							description: 'description',
+							limitation_id: 'limitation_id',
+							name: 'name'
+						}
+					]
+				})
+			)
+			const userApi = new UserApi()
+			const response = await userApi.getAllNutritionalLimitations()
+
+			expect(response).toStrictEqual([
+				{
+					description: 'description',
+					limitation_id: 'limitation_id',
+					name: 'name'
+				}
+			])
+		})
+
+		it('should return undefined if the request fails and catch error', async () => {
+			;(sportappApi.get as jest.Mock).mockImplementationOnce(() =>
+				Promise.resolve({
+					status: 400
+				})
+			)
+			const userApi = new UserApi()
+			const response = await userApi.getAllNutritionalLimitations()
+
+			expect(response).toBeUndefined()
+		})
+
+		it('should return undefined if the request fails and catch error', async () => {
+			;(sportappApi.get as jest.Mock).mockImplementationOnce(() =>
+				Promise.reject('error')
+			)
+			const userApi = new UserApi()
+
+			try {
+				await userApi.getAllNutritionalLimitations()
 			} catch (error) {
 				expect(error).toMatch('error')
 			}
