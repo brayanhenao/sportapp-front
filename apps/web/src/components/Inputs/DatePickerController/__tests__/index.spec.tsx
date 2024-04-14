@@ -4,22 +4,27 @@ import { useForm } from 'react-hook-form'
 
 describe('DatePickerController', () => {
 	let wrapper: RenderResult
+	let spy: jest.SpyInstance
 
 	beforeEach(() => {
+		const mockedDate = new Date(1996, 6, 19)
+
+		spy = jest.spyOn(global, 'Date').mockImplementation(() => mockedDate)
 		const { result } = renderHook(() => useForm())
 		result.current.register('date')
-		result.current.setValue('date', '1996-07-20')
+		result.current.setValue('date', '1996-07-19')
 		wrapper = render(
 			<DatePickerController
 				control={result.current.control}
 				name='date'
 				label='Date'
-				value={new Date('1996-07-20')}
+				value={new Date('1996-07-19')}
 			/>
 		)
 	})
 
 	afterEach(() => {
+		spy.mockRestore()
 		wrapper.unmount()
 	})
 
@@ -34,7 +39,7 @@ describe('DatePickerController', () => {
 				control={result.current.control}
 				name='date'
 				label='Date'
-				value={new Date('1996-07-20')}
+				value={new Date('1996-07-19')}
 			/>
 		)
 		expect(wrapper.container).toMatchSnapshot()
@@ -51,7 +56,7 @@ describe('DatePickerController', () => {
 				control={result.current.control}
 				name='date'
 				label='Date'
-				value={new Date('1996-07-20')}
+				value={new Date('1996-07-19')}
 			/>
 		)
 
