@@ -152,7 +152,7 @@ function Home() {
 				residence: {
 					city: user?.profileData?.city_of_residence ?? '',
 					country: user?.profileData?.country_of_residence ?? '',
-					lengthOfStay: `${user?.profileData?.residence_age}` ?? ''
+					lengthOfStay: `${user?.profileData?.residence_age}`
 				},
 				email: user?.profileData?.email ?? '',
 				password: '*********'
