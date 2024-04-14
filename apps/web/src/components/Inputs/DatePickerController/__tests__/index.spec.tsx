@@ -14,6 +14,7 @@ describe('DatePickerController', () => {
 				control={result.current.control}
 				name='date'
 				label='Date'
+				value={new Date('1996-07-20')}
 			/>
 		)
 	})
@@ -33,6 +34,7 @@ describe('DatePickerController', () => {
 				control={result.current.control}
 				name='date'
 				label='Date'
+				value={new Date('1996-07-20')}
 			/>
 		)
 		expect(wrapper.container).toMatchSnapshot()
@@ -49,6 +51,7 @@ describe('DatePickerController', () => {
 				control={result.current.control}
 				name='date'
 				label='Date'
+				value={new Date('1996-07-20')}
 			/>
 		)
 
