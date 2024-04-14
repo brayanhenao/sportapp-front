@@ -39,6 +39,10 @@ jest.mock('@sportapp/stores/src/user', () => ({
 	useUserStore: jest.fn().mockReturnValue({
 		getProfile: jest.fn(),
 		updateProfile: jest.fn(),
+		getSport: jest.fn(),
+		updateSport: jest.fn(),
+		getNutrition: jest.fn(),
+		updateNutrition: jest.fn(),
 		user: {}
 	})
 }))
@@ -61,7 +65,7 @@ jest.mock(
 				<button
 					onClick={() => {
 						const payload: PersonalFormData = {
-							birthday: '2021-01-01',
+							birthday: new Date(),
 							documentNumber: '123456789',
 							documentType: 'RG',
 							email: 'test@test.com',
@@ -106,10 +110,15 @@ jest.mock(
 					onClick={() => {
 						const payload: SportFormData = {
 							availableTrainingHoursPerWeek: 1,
-							favouriteSportId: 1,
+							favouriteSportId: '1',
 							height: 1,
 							weight: 1,
-							limitations: ['test'],
+							limitations: [
+								{
+									description: 'test',
+									name: 'test'
+								}
+							],
 							trainingFrequency: '1',
 							trainingObjective: '1'
 						}
@@ -199,7 +208,7 @@ describe('Home', () => {
 		expect(wrapper.getByText('NutritionalDataForm')).toBeInTheDocument()
 	})
 
-	it('should handle edit', () => {
+	it('should handle edit personalDataForm', () => {
 		const handleEdit = jest.fn()
 		;(useState as jest.Mock).mockReturnValueOnce([0, jest.fn()])
 		;(useState as jest.Mock).mockReturnValueOnce([
@@ -216,7 +225,7 @@ describe('Home', () => {
 		expect(handleEdit).toHaveBeenCalled()
 	})
 
-	it('should handle edit', () => {
+	it('should handle edit sportDataForm', () => {
 		const handleEdit = jest.fn()
 		;(useState as jest.Mock).mockReturnValueOnce([1, jest.fn()])
 		;(useState as jest.Mock).mockReturnValueOnce([
@@ -233,7 +242,7 @@ describe('Home', () => {
 		expect(handleEdit).toHaveBeenCalled()
 	})
 
-	it('should handle edit', () => {
+	it('should handle edit nutritionalDataForm', () => {
 		const handleEdit = jest.fn()
 		;(useState as jest.Mock).mockReturnValueOnce([2, jest.fn()])
 		;(useState as jest.Mock).mockReturnValueOnce([
