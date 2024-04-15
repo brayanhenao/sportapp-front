@@ -19,14 +19,29 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.misoteam.sportapp",
       "infoPlist": {
-        "UIBackgroundModes": ["location", "fetch"],
+        "UIBackgroundModes": [
+          "location",
+          "fetch"
+        ],
         "NSLocationWhenInUseUsageDescription": "This app uses your location to...",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "This app uses your location to...",
-        "NSLocationAlwaysUsageDescription": "This app uses your location to..."
+        "NSLocationAlwaysUsageDescription": "This app uses your location to...",
+        "NSMotionUsageDescription": "Allow $(PRODUCT_NAME) to access your device motion"
       }
     },
     "android": {
-      "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION", "ACCESS_BACKGROUND_LOCATION"],
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION",
+        "FOREGROUND_SERVICE",
+        "FOREGROUND_SERVICE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_BACKGROUND_LOCATION",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_LOCATION"
+      ],
       "backgroundLocation": {
         "minimumIntervalMs": 1000,
         "deferredUpdatesIntervalMs": 10000
@@ -35,7 +50,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.mobile"
+      "package": "com.misoteam.sportapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -50,6 +65,15 @@
           "isIosBackgroundLocationEnabled": true
         }
       ]
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "974ff20d-6859-4d44-8f83-e2f050c3d195"
+      }
+    },
+    "owner": "misoteam-sportapp"
   }
 }

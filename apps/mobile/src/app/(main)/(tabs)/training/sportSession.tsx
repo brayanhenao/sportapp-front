@@ -54,7 +54,7 @@ const SportSession: React.FC = () => {
 		setStartedAt(new Date())
 		startTimer()
 
-		const initial_location = isLocationAvailable
+		const initial_location = isLocationAvailable && locationUpdates.length
 			? {
 					...locationUpdates[0].coords,
 					altitude_accuracy:

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Pedometer } from 'expo-sensors'
 
 export const usePedometer = () => {
@@ -11,20 +11,22 @@ export const usePedometer = () => {
 			const isAvailable = await Pedometer.isAvailableAsync()
 			setIsPedometerAvailable(isAvailable ? 'available' : 'unavailable')
 
+			console.log('isAvailable', isAvailable)
 			if (isAvailable) {
 				Pedometer.watchStepCount((result) => {
+					console.log('result', result)
 					setCurrentStepCount(result.steps)
 				})
 
-				const pastDate = new Date()
-				pastDate.setHours(0, 0, 0, 0)
-				const todayDate = new Date()
+				// const pastDate = new Date()
+				// pastDate.setHours(0, 0, 0, 0)
+				// const todayDate = new Date()
 
-				const pastStepResult = await Pedometer.getStepCountAsync(
-					pastDate,
-					todayDate
-				)
-				setPastStepCount(pastStepResult.steps)
+				// const pastStepResult = await Pedometer.getStepCountAsync(
+				// 	pastDate,
+				// 	todayDate
+				// )
+				// setPastStepCount(pastStepResult.steps)
 			}
 		}
 

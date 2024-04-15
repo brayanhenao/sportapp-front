@@ -36,5 +36,5 @@ yarn-error.*
 
 
 # prebuilds
-ios
-android
+ios/
+android/

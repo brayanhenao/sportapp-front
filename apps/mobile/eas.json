@@ -1,0 +1,16 @@
+{
+  "build": {
+    "dev": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "EXPO_USE_METRO_WORKSPACE_ROOT": 1,
+        "EXPO_PUBLIC_SPORTAPP_API_URL": "https://bl61vrm1ai.execute-api.us-east-1.amazonaws.com/dev"
+      },
+      "android": {
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleRelease"
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import * as Location from 'expo-location'
 
 const startLocationUpdates = async (
@@ -9,17 +9,23 @@ const startLocationUpdates = async (
 ) => {
 	try {
 		let { status } = await Location.requestForegroundPermissionsAsync()
-		if (status !== 'granted') {
+		const { status: backgroundStatus } =
+			await Location.requestBackgroundPermissionsAsync()
+		if (status !== 'granted' || backgroundStatus !== 'granted') {
 			setIsLocationAvailable(false)
 			return
 		}
 
 		setIsLocationAvailable(true)
-
 		await Location.startLocationUpdatesAsync('locationUpdates', {
 			accuracy: Location.Accuracy.High,
 			timeInterval: 1000,
-			distanceInterval: 1
+			distanceInterval: 1,
+			foregroundService: {
+				notificationTitle: 'Location',
+				notificationBody: 'Location updates are running',
+				notificationColor: '#ff0000'
+			}
 		})
 
 		Location.watchPositionAsync(
